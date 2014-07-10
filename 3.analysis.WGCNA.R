@@ -1,5 +1,5 @@
 ###############################################################################
-#'title         : Load survey data on SKEP Phase I
+#'title         : Network Analysis of SKEP Phase I
 #'date          : July, 2014
 #'purpose       : Network Construction and Analysis 
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
@@ -154,10 +154,10 @@ sizeGrWindow(10,6)
 
 # Will display correlations and their p-values
 
-textMatrix = paste(signif(moduleVariablesCor, 2), "\n(",
+textMatrix <- paste(signif(moduleVariablesCor, 2), "\n(",
                    signif(moduleVariablesPvalue, 1), ")", sep = "");
 
-dim(textMatrix) = dim(moduleVariablesCor)
+dim(textMatrix) <- dim(moduleVariablesCor)
 
 par(mar = c(6, 8.5, 3, 3))
 # Display the correlation values within a heatmap plot
@@ -174,30 +174,30 @@ labeledHeatmap(Matrix = moduleVariablesCor,
                main = paste("Module-trait relationships"))
 
 #### 
-modNames = substring(names(MEs), 3)
+modNames <- substring(names(MEs), 3)
 
 VarModuleMembership <- as.data.frame(cor(data, MEs, use = "p"))
 
 MMPvalue <- as.data.frame(corPvalueStudent(as.matrix(VarModuleMembership), nFields))
 
-names(VarModuleMembership) = paste("MM", modNames, sep="")
+names(VarModuleMembership) <- paste("MM", modNames, sep="")
 
-names(MMPvalue) = paste("p.MM", modNames, sep="")
+names(MMPvalue) <- paste("p.MM", modNames, sep="")
 
-VarYieldSignificance = as.data.frame(cor(data, yield.data, use = "p"))
+VarYieldSignificance <- as.data.frame(cor(data, yield.data, use = "p"))
 
 GSPvalue <- as.data.frame(corPvalueStudent(as.matrix(VarYieldSignificance), nFields))
 
-names(VarYieldSignificance) = paste("GS.", names(yield), sep="")
+names(VarYieldSignificance) <- paste("GS.", names(yield), sep="")
 
-names(GSPvalue) = paste("p.GS.", names(yield), sep="")
+names(GSPvalue) <- paste("p.GS.", names(yield), sep="")
 
 #####-- Step 3 : Intramodular analysis: identifying variables within Module and yields
 
-module = "blue" # grey, yellow, blue, brown turquoise
-column = match(module, modNames)
+module <- "blue" # grey, yellow, blue, brown turquoise
+column <- match(module, modNames)
 
-moduleGenes = moduleColors==module
+moduleGenes <- moduleColors == module
 
 verboseScatterplot(abs(VarModuleMembership[moduleGenes, column]),
                    abs(VarYieldSignificance[moduleGenes, 1]),

@@ -1,5 +1,5 @@
 ###############################################################################
-#'title         : Load survey data on SKEP Phase I
+#'title         : Cleaning survey data on SKEP Phase I
 #'date          : July, 2014
 #'purpose       : load data from the shared Google Drive which is the exel 
 #'                format
