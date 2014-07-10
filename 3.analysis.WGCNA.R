@@ -117,7 +117,7 @@ net.data <- blockwiseModules(data,
                                       numericLabels = TRUE, 
                                       pamRespectsDendro = FALSE, 
                                       saveTOMs = TRUE, 
-                                      saveTOMFileBase = "inj.datsurveyTOM", 
+                                      saveTOMFileBase = "data.surveyTOM", 
                                       verbose = 3)
 
 ##
