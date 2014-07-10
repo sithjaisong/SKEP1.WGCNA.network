@@ -110,3 +110,4 @@ vars <- c(pro.sit, insect.injuries, disease, yield)
 selected.data <- ds[vars]
 
 save(selected.data, file = "selected.data.RData")
+#eos

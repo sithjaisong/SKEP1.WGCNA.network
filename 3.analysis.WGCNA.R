@@ -208,4 +208,4 @@ verboseScatterplot(abs(VarModuleMembership[moduleGenes, column]),
                    cex.lab = 1.2, 
                    cex.axis = 1.2, 
                    col = "red")
-
+#eos
