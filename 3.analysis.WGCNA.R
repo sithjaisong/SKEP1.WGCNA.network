@@ -1,8 +1,7 @@
 ###############################################################################
 #'title         : Load survey data on SKEP Phase I
 #'date          : July, 2014
-#'purpose       : load data from the shared Google Drive which is the exel 
-#'                format
+#'purpose       : Network Construction and Analysis 
 #'writed by     : Sith Jaisong (s.jaisong@irri.org)
 #'contact       : International Rice Research Institute
 #'input         : data from the 2.cleaning the data
