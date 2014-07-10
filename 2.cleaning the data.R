@@ -42,8 +42,8 @@ farmer.info <- c("fa", # field area
                  "hd", # harvest date
                  "hdjul",
                  "ccd",
-                 "cvr", cutivar
-                 "vartype", varitiety type
+                 "cvr", #cutivar
+                 "vartype", #varitiety type
                  "varcoded",# rice variety code
                  "fym",
                  "fym_coded"
