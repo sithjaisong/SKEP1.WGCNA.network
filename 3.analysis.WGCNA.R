@@ -40,7 +40,7 @@ yield.data <- subset(selected.data, select = yield)
 
 yieldColors <- numbers2colors(yield.data, signed = F)
 
-plotDendroAndColors(sampleTree,
+plotDendroAndColors(clustaltree,
                     yieldColors,
                     groupLabels = names(yield.data),
                     main = "Dendrogram of PS and IP with yield heatmap"
@@ -71,9 +71,45 @@ sft <- pickSoftThreshold(t(data), dataIsExpr = TRUE,
                          verbose = 0, 
                          indent = 0)
 
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
 
+#Plot the result
+sizeGrWindow(9,5)
+par(mfrow = c(1,2))
+cex1 = 0.9
+
+# Scale-Free topology fit index as a function pf tje soft-thresholding power
+
+plot(sft$fitIndices[,1],
+     sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",
+     ylab="Scale Free Topology Model Fit,signed R^2",
+     type="n",
+     main = paste("Scale independence"))
+
+text(sft$fitIndices[,1],
+     sft$fitIndices[,2],
+     labels=powers,cex=cex1,col="red")
+
+# this line corresponds to using an R^2 cut-off of h
+# Mean connectivity as a function of the soft-thresholding power
+
+plot(sft$fitIndices[,1], 
+     sft$fitIndices[,5],
+     xlab="Soft Threshold (power)",
+     ylab="Mean Connectivity",
+     type="n",
+     main = paste("Mean connectivity"))
+
+text(sft$fitIndices[,1],
+     sft$fitIndices[,5],
+     labels=powers,
+     cex=cex1,
+     col="red")
+
+######-----One-step network construction and module detection-----#####
 net.data <- blockwiseModules(data, 
-                                      power = 6, 
+                                      power = 4, 
                                       TOMType = "unsigned", 
                                       minModuleSize = 1, 
                                       reassignThreshold = 0, 
@@ -98,64 +134,6 @@ plotDendroAndColors(net.data$dendrograms[[1]],
                     addGuide = TRUE, 
                     guideHang = 0.05)
 
-# Plot the results:
-
-#Scale-free topology fit index as a function of the soft-thresholding power
-
-plot(sft$fitIndices[,1],
-     -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
-     xlab="Soft Threshold (power)",
-     ylab="Scale Free Topology Model Fit,signed R^2",
-     type="n",
-     main = paste("Scale independence"))
-
-text(sft$fitIndices[,1],
-     -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
-     labels=powers,cex=cex1,col="red")
-
-# this line corresponds to using an R^2 cut-off of h
-# Mean connectivity as a function of the soft-thresholding power
-
-plot(sft$fitIndices[,1], 
-     sft$fitIndices[,5],
-     xlab="Soft Threshold (power)",
-     ylab="Mean Connectivity",
-     type="n",
-     main = paste("Mean connectivity"))
-
-text(sft$fitIndices[,1],
-     sft$fitIndices[,5],
-     labels=powers,
-     cex=cex1,
-     col="red")
-
-##### Stpe 2.2 : One-step network construction and module detection --#####
-
-net.data <- blockwiseModules(data, 
-                                      power = 1, 
-                                      TOMType = "unsigned", 
-                                      minModuleSize = 1, 
-                                      reassignThreshold = 0, 
-                                      mergeCutHeight = 0.25, 
-                                      numericLabels = TRUE, 
-                                      pamRespectsDendro = FALSE, 
-                                      saveTOMs = TRUE, 
-                                      saveTOMFileBase = "inj.datsurveyTOM", 
-                                      verbose = 3)
-
-##How many module the data have
-
-mergedColors <- labels2colors(net.data$colors) 
-
-# Plot the dendrogram and the module colors underneath
-
-plotDendroAndColors(net.data$dendrograms[[1]], 
-                    mergedColors[net.data$blockGenes[[1]]], 
-                    "Module colors", 
-                    dendroLabels = FALSE, 
-                    hang = 0.03, 
-                    addGuide = TRUE, 
-                    guideHang = 0.05)
 
 moduleLabels <- net.data$colors # colors represent module
 moduleColors <- labels2colors(net.data$colors)
@@ -196,10 +174,6 @@ labeledHeatmap(Matrix = moduleVariablesCor,
                main = paste("Module-trait relationships"))
 
 #### 
-#yield = as.data.frame(datprodsit$Yield)
-
-#names(yield) = "yield"
-
 modNames = substring(names(MEs), 3)
 
 VarModuleMembership <- as.data.frame(cor(data, MEs, use = "p"))
@@ -220,7 +194,7 @@ names(GSPvalue) = paste("p.GS.", names(yield), sep="")
 
 #####-- Step 3 : Intramodular analysis: identifying variables within Module and yields
 
-module = "turquoise" # grey, yellow, blue, brown
+module = "blue" # grey, yellow, blue, brown turquoise
 column = match(module, modNames)
 
 moduleGenes = moduleColors==module
@@ -234,3 +208,4 @@ verboseScatterplot(abs(VarModuleMembership[moduleGenes, column]),
                    cex.lab = 1.2, 
                    cex.axis = 1.2, 
                    col = "red")
+
