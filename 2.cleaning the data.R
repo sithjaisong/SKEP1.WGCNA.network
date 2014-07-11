@@ -88,12 +88,12 @@ disease <-c("blb", # bacterial leaf blight
                 "dp", # dirty panicle
                 "rtd", # rice tungro disease
                 "rsd", # ragged stunt disease
-                "gsd", # gressy stunt disease
-                "hb", # 
+                #"gsd", # gressy stunt disease No data
+                #"hb", # No data
                 "bu",
                 "mu",
                 "pghu",
-                "stb",        
+                #"stb", # No data        
                 "de"
                 )
 yield <- c("yield")
@@ -108,6 +108,8 @@ vars <- c(pro.sit, insect.injuries, disease, yield)
 ## clean data bacase the data must be the numeric data
 
 selected.data <- ds[vars]
+
+selected.data <-selected.data[complete.cases(selected.data),] # delete the rows that contain NA 
 
 save(selected.data, file = "selected.data.RData")
 #eos
