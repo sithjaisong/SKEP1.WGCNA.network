@@ -11,22 +11,23 @@
 #'output        : data frame and RData 
 ###############################################################################
 
-#####-- Load Package --#####
+#--- Load Package --------------------------------------------------------------
 library(XLConnect)
 
-# set option
+#--- Set option-----------------------------------------------------------------
 options(stringsAsFactors = FALSE) # data frame created after executing that line will not auto-convert to factors
 
-######-- Step 1: Loading Data --#####
+#--- Step 1: Loading Data --------------------------------------------------
 # load data of Survey data of SKEP Phase 1 
 
-file <- list.files(path = paste("/Users/iSith/Google Drive/SKEP1project/data.file/"), pattern = ".xlsx$", full.names = TRUE) # list all file with xlsx format.
+file <- list.files(path = paste("/Users/iSith/Google Drive/SKEP1project/data.file/"), 
+                   pattern = ".xlsx$",   full.names = TRUE) 
+# list all file with xlsx format.
 
-file # show all exel file in this folder
+ # show all exel file in this folder
 
-### Load the data work sheet exel file
-workbook <- loadWorkbook(file[3]) # select the file name : SKEP1Survey.xlsx
-
+### Load the data work sheet exel fil
+workbook <- loadWorkbook(file[3]) # select the file nåame : SKEP1Survey.xlsx
 survey <- readWorksheet(workbook, sheet = 2) # # select the data in sheet no 2
 
 # Check the names of the variables 
@@ -36,8 +37,7 @@ names(survey) <- tolower(names(survey)) # lower case names of variables
 ds <- subset(survey, select = -c(ced, nplsqm, wcp)) # delete column named ced because there is no data in those column
 
 ds <- ds[complete.cases(ds),] # delete the rows that contain NA 
-
-str(ds) # check the data
+ # check the data
 
 # set the the class of variable 
 

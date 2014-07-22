@@ -103,7 +103,7 @@ yield <- c("yield")
 ignore <- c(id, location, farmer.info, dvs) 
 
 #####-----select the varibles for the analysis-----####
-vars <- c(pro.sit, insect.injuries, disease, yield)
+vars <- c("country",pro.sit, insect.injuries, disease, yield)
 
 ## clean data bacase the data must be the numeric data
 

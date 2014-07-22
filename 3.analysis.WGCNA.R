@@ -209,3 +209,6 @@ verboseScatterplot(abs(VarModuleMembership[moduleGenes, column]),
                    cex.axis = 1.2, 
                    col = "red")
 #eos
+cor.mat <- cor(data)
+Sur.Net.mat <- TOMsimilarityFromExpr(datExpr = data,
+                                 corType = "p")
