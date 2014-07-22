@@ -48,21 +48,22 @@ farmer.info <- c("fa", # field area
                  "fym",
                  "fym_coded"
                  )
-dvs <- c("dvs_1",
-         "dvs_2")
+dvs <- c("dvs_1",# development stage at the first visit 
+         "dvs_2" # development stage at the second visit
+         )
 
-pro.sit <- c("n",
-             "p",
-             "k",
-             "mf",
-             "iu",
-             "hu",
-             "fu"
-)
+pro.sit <- c("n", # amount of Nitrogen applied (kg/ha)
+             "p", # amount of Phosphorus applied (kg/ha)
+             "k", # amount of Potassium applied (kg/ha)
+             "mf", # amount of Manure fertilizer applied (kg/ha)
+             "iu", # frequency of insecticide applied (kg/ha)
+             "hu", # frequency of herbicide applied (kg/ha)
+             "fu" # frequency of funcidie applied (kg/ha)
+                )
 insect.injuries <- c("dh", # dead heart
                 "wh", # white head
                 "gm", # gall midge
-                "rt", # rat
+                "rt", # rat damage
                 "wm", # whorl maggot
                 "lf", # leaf foldder
                 "def", # defoliators
@@ -79,10 +80,10 @@ disease <-c("blb", # bacterial leaf blight
                 "bls", # bacterial leaf streak
                 "nbs", # nerrow brown spot
                 "rs", # red stripe
-                "ls", # 
+                "ls", # leas streak
                 "shb", # sheath blight
                 "shr", # sheath rot
-                "sr", #
+                "sr", # 
                 "fsm", # false smut
                 "nb", # neck blast
                 "dp", # dirty panicle
@@ -103,13 +104,16 @@ yield <- c("yield")
 ignore <- c(id, location, farmer.info, dvs) 
 
 #####-----select the varibles for the analysis-----####
-vars <- c("country",pro.sit, insect.injuries, disease, yield)
+vars <- c("country",pro.sit, insect.injuries, disease)
 
 ## clean data bacase the data must be the numeric data
 
 selected.data <- ds[vars]
+yield <- ds[c("country", "yield")]
 
-selected.data <-selected.data[complete.cases(selected.data),] # delete the rows that contain NA 
+#selected.data <- selected.data[complete.cases(selected.data),] # delete the rows that contain NA 
+#crop.injur <- selected.data[c("country", pro.sit, insect.injuries, disease)]
+#yield <- selected.data[c("country","yield")]
 
 save(selected.data, file = "selected.data.RData")
 #eos

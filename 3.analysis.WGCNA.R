@@ -13,14 +13,16 @@ lnames
 #####-- Load Package --#####
 library(WGCNA)
 options(stringsAsFactors = FALSE) # data frame created after executing that line will not auto-convert to factors
+allowWGCNAThreads()
 ######-- Step 1: Loading Data --#####
 
 data <- selected.data
 
+
 #####-- Step 1.2 Clustering and d identication of outlier --#####
 
 # Analyse the cluster analysis by using package flashClust what the differnt between clust and falshClust ???
-clustaltree <- flashClust(dist(data), method = "average")
+clustaltree <- flashClust(dist(data[-1]), method = "average")
 
 ## Check the outline with cluter analysis  
 
@@ -33,16 +35,23 @@ plot(clustaltree,
      cex.main = 2
      )
 
+# the dentrogram plot show the data observed at 380 is the out group
+
+#clus <- cutreeStatic(clustaltree, cutHeight = 3000, minSize = NULL)
+#table(clus) # show the member of group after cut at height = 300
+#keep.samples <- clus==1 # select only group 1, and group 2 is the out-group
+#data <- data[keep.samples,]
+
+#clustaltree <- flashClust(dist(data[-1]), method = "average")
+
 ### combine the cluster of production situation, insect injuires and disease 
 ### with the prodcution (yield) 
 
-yield.data <- subset(selected.data, select = yield)
-
-yieldColors <- numbers2colors(yield.data, signed = F)
+yieldColors <- numbers2colors(yield[-1], signed = F)
 
 plotDendroAndColors(clustaltree,
                     yieldColors,
-                    groupLabels = names(yield.data),
+                    groupLabels = names(yield[-1]),
                     main = "Dendrogram of PS and IP with yield heatmap"
                     )
 
@@ -60,7 +69,7 @@ plotDendroAndColors(clustaltree,
 # function pickSoftThreshold that performs the analysis of network topology and aids the
 # user in choosing a proper soft-thresholding power. 
 ###############################################################################
-sft <- pickSoftThreshold(t(data), dataIsExpr = TRUE,
+sft <- pickSoftThreshold(t(data[-1]), dataIsExpr = TRUE,
                          RsquaredCut = 0.85, 
                          powerVector = c(seq(1, 10, by = 1), seq(12, 20, by = 2)), 
                          removeFirst = FALSE, nBreaks = 10, blockSize = NULL, 
@@ -192,7 +201,7 @@ names(VarYieldSignificance) <- paste("GS.", names(yield), sep="")
 
 names(GSPvalue) <- paste("p.GS.", names(yield), sep="")
 
-#####-- Step 3 : Intramodular analysis: identifying variables within Module and yields
+#####-- Step 3 : Intramodular analysis: identifying variables within Module and yields-----#####
 
 module <- "blue" # grey, yellow, blue, brown turquoise
 column <- match(module, modNames)
